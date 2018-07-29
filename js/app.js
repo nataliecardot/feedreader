@@ -7,7 +7,7 @@
  */
 
 // The names and URLs to all of the feeds we'd like available.
-var allFeeds = [
+let allFeeds = [
     {
         name: 'Udacity Blog',
         url: 'http://blog.udacity.com/feed'
@@ -41,17 +41,17 @@ function init() {
  * which will be called after everything has run successfully.
  */
  function loadFeed(id, cb) {
-     var feedUrl = allFeeds[id].url,
+     let feedUrl = allFeeds[id].url,
          feedName = allFeeds[id].name;
 
      $.ajax({
        type: "POST",
        url: 'https://rsstojson.udacity.com/parseFeed',
        data: JSON.stringify({url: feedUrl}),
-       contentType:"application/json",
-       success: function (result, status){
+       contentType: "application/json",
+       success: function (result, status) {
 
-                 var container = $('.feed'),
+                 let container = $('.feed'),
                      title = $('.header-title'),
                      entries = result.feed.entries,
                      entriesLen = entries.length,
@@ -73,7 +73,7 @@ function init() {
                      cb();
                  }
                },
-       error: function (result, status, err){
+       error: function (result, status, err) {
                  //run only the callback without attempting to parse result due to error
                  if (cb) {
                      cb();
@@ -93,7 +93,7 @@ google.setOnLoadCallback(init);
  * until the DOM is ready.
  */
 $(function() {
-    var container = $('.feed'),
+    let container = $('.feed'),
         feedList = $('.feed-list'),
         feedItemTemplate = Handlebars.compile($('.tpl-feed-list-item').html()),
         feedId = 0,
@@ -117,7 +117,7 @@ $(function() {
      * (following the link) from occurring.
      */
     feedList.on('click', 'a', function() {
-        var item = $(this);
+        let item = $(this);
 
         $('body').addClass('menu-hidden');
         loadFeed(item.data('id'));

@@ -14,6 +14,9 @@ $(function() {
     * feeds definitions, the allFeeds variable in our application.
     * A describe function is for grouping related specs, which group comprises * a test suite.
     */
+
+    const body = document.querySelector('body');
+
     describe('RSS Feeds', function() {
         /* This is our first test - it tests to make sure that the
           allFeeds variable has been defined and that it is not
@@ -23,7 +26,6 @@ $(function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
-
 
         /* This test loops through each feed
          * in the allFeeds object and ensures that it has a URL defined
@@ -37,7 +39,6 @@ $(function() {
             }
         });
 
-
         /* This test loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
@@ -48,8 +49,6 @@ $(function() {
                 expect(feed.name.length).not.toBe(0);
             }
          });
-
-
     });
 
     /* A new test suite named "The menu" */
@@ -60,7 +59,6 @@ $(function() {
          * hiding/showing of the menu element.
          */
         it('is hidden', function() {
-            const body = document.querySelector('body');
             expect(body.classList.contains('menu-hidden')).toBe(true);
         });
 
@@ -70,7 +68,6 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
         it('toggles on and off on click', function() {
-            const body = document.querySelector('body');
             const menu = document.querySelector('.menu-icon-link');
 
             menu.click();
@@ -96,7 +93,6 @@ $(function() {
             loadFeed(0, done);
         });
 
-
         // Tests whether there is at least one .entry element within .feed container
         it('has at least one entry', function() {
             const feedEntries = document.querySelectorAll('.feed .entry');
@@ -115,7 +111,7 @@ $(function() {
         const feed = document.querySelector('.feed');
         const firstFeed = [];
 
-        // New feed loads automatically when this code runs. Since done() can only be called once, we call it in the final async function to let Jasmine know when to continue
+        // New feed loads automatically when this code runs. Since done() can only be called once, we call it in the final asynchronous function to let Jasmine know when to continue
         beforeEach(function(done) {
             // Calls first feed
             loadFeed(0, function() {
@@ -124,14 +120,10 @@ $(function() {
                 Array.from(feed.children).forEach(function(entry) {
                     firstFeed.push(entry.innerText);
                 });
-                // Calls the new feed
-                loadFeed(1);
             });
 
-            // Calls done()
-            loadFeed(1, function() {
-                done();
-            });
+            // Calls the new feed and done()
+            loadFeed(1, done);
         });
 
         /* A test that ensures when a new feed is loaded
